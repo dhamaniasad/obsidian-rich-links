@@ -114,7 +114,7 @@ export default class MyPlugin extends Plugin {
 	</div>
 	</div>
 	<div class="rich-link-card-text">
-		<h1 class="rich-link-card-title">${data.meta.title || ""}d</h1>
+		<h1 class="rich-link-card-title">${data.meta.title || ""}</h1>
 		<p class="rich-link-card-description">
 		${data.meta.description || ""}
 		</p>
