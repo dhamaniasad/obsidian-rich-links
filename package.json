@@ -1,14 +1,14 @@
 {
-  "name": "obsidian-sample-plugin",
+  "name": "obsidian-rich-links",
   "version": "0.12.0",
-  "description": "This is a sample plugin for Obsidian (https://obsidian.md)",
+  "description": "Rich Links plugin Obsidian (https://obsidian.md)",
   "main": "main.js",
   "scripts": {
     "dev": "rollup --config rollup.config.js -w",
     "build": "rollup --config rollup.config.js --environment BUILD:production"
   },
   "keywords": [],
-  "author": "",
+  "author": "Asad Dhamani",
   "license": "MIT",
   "devDependencies": {
     "@rollup/plugin-commonjs": "^18.0.0",

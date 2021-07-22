@@ -16,7 +16,7 @@ export default class MyPlugin extends Plugin {
 
 		await this.loadSettings();
 
-		this.addRibbonIcon('dice', 'Sample Plugin', () => {
+		this.addRibbonIcon('link', 'Rich Links', () => {
 			new Notice('This is a notice!');
 		});
 
@@ -33,6 +33,29 @@ export default class MyPlugin extends Plugin {
 				if (leaf) {
 					if (!checking) {
 						new SampleModal(this.app).open();
+					}
+					return true;
+				}
+				return false;
+			}
+		});
+
+		this.addCommand({
+			id: 'create-rich-links',
+			name: 'Create Rich Links',
+			// callback: () => {
+			// 	console.log('Simple Callback');
+			// },
+			checkCallback: (checking: boolean) => {
+				let leaf = this.app.workspace.activeLeaf;
+				if (leaf) {
+					if (!checking) {
+						const link = document.querySelector(".cm-url:not(.cm-formatting)");
+						if (link) {
+							ajaxPromise({url: `http://iframely.server.crestify.com/iframely?url=${link.textContent}`}).then((res) => {
+								console.log('res: ', res);
+							});
+						}
 					}
 					return true;
 				}
