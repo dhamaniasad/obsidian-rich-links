@@ -24,11 +24,11 @@ export default class MyPlugin extends Plugin {
 
     await this.loadSettings();
 
-    this.addRibbonIcon("link", "Rich Links", () => {
-      new Notice("This is a notice!");
-    });
+//     this.addRibbonIcon("link", "Rich Links", () => {
+//       new Notice("This is a notice!");
+//     });
 
-    this.addStatusBarItem().setText("Status Bar Text");
+//     this.addStatusBarItem().setText("Status Bar Text");
 
     // this.addCommand({
     // 	id: 'open-sample-modal',
@@ -68,17 +68,17 @@ export default class MyPlugin extends Plugin {
 
     // this.addSettingTab(new SampleSettingTab(this.app, this));
 
-    this.registerCodeMirror((cm: CodeMirror.Editor) => {
-      console.log("codemirror", cm);
-    });
+//     this.registerCodeMirror((cm: CodeMirror.Editor) => {
+//       console.log("codemirror", cm);
+//     });
 
-    this.registerDomEvent(document, "click", (evt: MouseEvent) => {
-      console.log("click", evt);
-    });
+//     this.registerDomEvent(document, "click", (evt: MouseEvent) => {
+//       console.log("click", evt);
+//     });
 
-    this.registerInterval(
-      window.setInterval(() => console.log("setInterval"), 5 * 60 * 1000)
-    );
+//     this.registerInterval(
+//       window.setInterval(() => console.log("setInterval"), 5 * 60 * 1000)
+//     );
   }
 
   onunload() {
@@ -106,7 +106,7 @@ export default class MyPlugin extends Plugin {
       }).then((res) => {
 		  const data = JSON.parse(res);
 		  const imageLink = data.links[0].href || '';
-        console.log("res: ", res);
+//         console.log("res: ", res);
         editor.replaceSelection(`
 <div class="rich-link-card-container"><a class="rich-link-card" href="#" target="_blank">
 	<div class="rich-link-image-container">
