@@ -108,7 +108,7 @@ export default class MyPlugin extends Plugin {
 		  const imageLink = data.links[0].href || '';
 //         console.log("res: ", res);
         editor.replaceSelection(`
-<div class="rich-link-card-container"><a class="rich-link-card" href="#" target="_blank">
+<div class="rich-link-card-container"><a class="rich-link-card" href="${url}" target="_blank">
 	<div class="rich-link-image-container">
 		<div class="rich-link-image" style="background-image: url('${imageLink}')">
 	</div>
