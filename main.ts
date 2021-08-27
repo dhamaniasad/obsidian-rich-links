@@ -3,18 +3,16 @@ import {
   Modal,
   Notice,
   Plugin,
-  PluginSettingTab,
-  Setting,
   Editor,
   MarkdownView
 } from "obsidian";
 
 interface ObsidianRichLinksPluginSettings {
-  mySetting: string;
+
 }
 
 const DEFAULT_SETTINGS: ObsidianRichLinksPluginSettings = {
-  mySetting: "default",
+
 };
 
 export default class ObsidianRichLinksPlugin extends Plugin {
