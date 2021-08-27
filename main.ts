@@ -6,79 +6,43 @@ import {
   PluginSettingTab,
   Setting,
   Editor,
+  MarkdownView
 } from "obsidian";
 
-interface MyPluginSettings {
+interface ObsidianRichLinksPluginSettings {
   mySetting: string;
 }
 
-const DEFAULT_SETTINGS: MyPluginSettings = {
+const DEFAULT_SETTINGS: ObsidianRichLinksPluginSettings = {
   mySetting: "default",
 };
 
-export default class MyPlugin extends Plugin {
-  settings: MyPluginSettings;
+export default class ObsidianRichLinksPlugin extends Plugin {
+  settings: ObsidianRichLinksPlugin;
 
   async onload() {
     console.log("loading plugin");
 
     await this.loadSettings();
 
-//     this.addRibbonIcon("link", "Rich Links", () => {
-//       new Notice("This is a notice!");
-//     });
-
-//     this.addStatusBarItem().setText("Status Bar Text");
-
-    // this.addCommand({
-    // 	id: 'open-sample-modal',
-    // 	name: 'Open Sample Modal',
-    // 	// callback: () => {
-    // 	// 	console.log('Simple Callback');
-    // 	// },
-    // 	checkCallback: (checking: boolean) => {
-    // 		let leaf = this.app.workspace.activeLeaf;
-    // 		if (leaf) {
-    // 			if (!checking) {
-    // 				new SampleModal(this.app).open();
-    // 			}
-    // 			return true;
-    // 		}
-    // 		return false;
-    // 	}
-    // });
+    this.addRibbonIcon("link", "Rich Links", () => {
+      let activeLeaf = this.app.workspace.getActiveViewOfType(MarkdownView);
+      if (activeLeaf) {
+        let editor = activeLeaf.editor;
+        this.urlToIframe(editor);
+      }
+    });
 
     this.addCommand({
       id: "create-rich-links",
       name: "Create Rich Links",
-      // callback: () => {
-      // 	console.log('Simple Callback');
-      // },
-      checkCallback: (checking: boolean) => {
-        let leaf = this.app.workspace.activeLeaf;
-        if (leaf) {
-          if (!checking) {
-            this.urlToIframe();
-          }
-          return true;
+      editorCheckCallback: (checking: boolean, editor: Editor) => {
+        if (!checking) {
+          this.urlToIframe(editor);
         }
-        return false;
+        return true;
       },
     });
-
-    // this.addSettingTab(new SampleSettingTab(this.app, this));
-
-//     this.registerCodeMirror((cm: CodeMirror.Editor) => {
-//       console.log("codemirror", cm);
-//     });
-
-//     this.registerDomEvent(document, "click", (evt: MouseEvent) => {
-//       console.log("click", evt);
-//     });
-
-//     this.registerInterval(
-//       window.setInterval(() => console.log("setInterval"), 5 * 60 * 1000)
-//     );
   }
 
   onunload() {
@@ -92,9 +56,7 @@ export default class MyPlugin extends Plugin {
     return urlRegex.test(text);
   }
 
-  urlToIframe(): void {
-    let activeLeaf: any = this.app.workspace.activeLeaf;
-    let editor = activeLeaf.view.sourceMode.cmEditor;
+  urlToIframe(editor: Editor): void {
     let selectedText = editor.somethingSelected()
       ? editor.getSelection()
       : false;
@@ -106,7 +68,7 @@ export default class MyPlugin extends Plugin {
       }).then((res) => {
 		  const data = JSON.parse(res);
 		  const imageLink = data.links[0].href || '';
-//         console.log("res: ", res);
+
         editor.replaceSelection(`
 <div class="rich-link-card-container"><a class="rich-link-card" href="${url}" target="_blank">
 	<div class="rich-link-image-container">
@@ -126,8 +88,7 @@ export default class MyPlugin extends Plugin {
 
 `);
       });
-    }
-    {
+    } else {
       new Notice("Select a URL to convert to rich link.");
     }
   }
@@ -156,34 +117,3 @@ class SampleModal extends Modal {
     contentEl.empty();
   }
 }
-
-// class SampleSettingTab extends PluginSettingTab {
-//   plugin: MyPlugin;
-
-//   constructor(app: App, plugin: MyPlugin) {
-//     super(app, plugin);
-//     this.plugin = plugin;
-//   }
-
-//   display(): void {
-//     // let { containerEl } = this;
-
-//     // containerEl.empty();
-
-//     // containerEl.createEl("h2", { text: "Settings for my awesome plugin." });
-
-//     // new Setting(containerEl)
-//     //   .setName("Setting #1")
-//     //   .setDesc("It's a secret")
-//     //   .addText((text) =>
-//     //     text
-//     //       .setPlaceholder("Enter your secret")
-//     //       .setValue("")
-//     //       .onChange(async (value) => {
-//     //         console.log("Secret: " + value);
-//     //         this.plugin.settings.mySetting = value;
-//     //         await this.plugin.saveSettings();
-//     //       })
-//     //   );
-//   }
-// }

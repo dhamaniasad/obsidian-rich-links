@@ -1,11 +1,24 @@
 .rich-link-card {
-  border: 1px solid rgba(0, 0, 0, 0.065);
-  margin: 5px 0;
+  border: 1px solid var(--background-modifier-border);
+  margin: 20px 0;
   border-radius: 3px;
   width: 100%;
   display: flex;
   text-decoration: none;
-  color: black;
+  background-color: var(--background-primary);
+}
+
+.rich-link-card-container {
+  position: relative;
+}
+
+.rich-link-card-container::after {
+  position: absolute;
+  content: " ";
+  width: 100%;
+  height: 1px;
+  background-color: var(--background-modifier-border);
+  bottom: -10px;
 }
 
 .rich-link-card .rich-link-image-container {
@@ -20,7 +33,7 @@
   background-size: cover;
   background-repeat: no-repeat;
   padding-bottom: 100px;
-  background-color: #f4f4f4;
+  background-color: var(--background-secondary);
 }
 
 .rich-link-card .rich-link-card-text {
@@ -35,13 +48,14 @@
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  color: var(--text-normal);
 }
 
 .rich-link-card .rich-link-card-description {
   font-family: sans-serif;
   font-size: 14px;
   margin: 0;
-  color: #999;
+  color: var(--text-muted);
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -52,7 +66,7 @@
   font-family: sans-serif;
   font-size: 14px;
   margin: 0;
-  color: #777;
+  color: var(--text-faint);
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
