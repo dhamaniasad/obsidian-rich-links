@@ -26,6 +26,7 @@
   width: 35%;
   min-width: 120px;
   overflow: hidden;
+  border-right: 1px solid var(--background-modifier-border);
 }
 
 .rich-link-card .rich-link-image {
@@ -38,6 +39,7 @@
 
 .rich-link-card .rich-link-card-text {
   padding: 4px;
+  width: 75%;
 }
 
 .rich-link-card .rich-link-card-title {

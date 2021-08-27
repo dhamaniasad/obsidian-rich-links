@@ -1,6 +1,4 @@
 import {
-  App,
-  Modal,
   Notice,
   Plugin,
   Editor,
@@ -74,9 +72,9 @@ export default class ObsidianRichLinksPlugin extends Plugin {
 	</div>
 	</div>
 	<div class="rich-link-card-text">
-		<h1 class="rich-link-card-title">${data.meta.title || ""}</h1>
+		<h1 class="rich-link-card-title">${(data.meta.title || "").replace(/\s{3,}/g, ' ').trim()}</h1>
 		<p class="rich-link-card-description">
-		${data.meta.description || ""}
+		${(data.meta.description || "").replace(/\s{3,}/g, ' ').trim()}
 		</p>
 		<p class="rich-link-href">
 		${url}
@@ -97,21 +95,5 @@ export default class ObsidianRichLinksPlugin extends Plugin {
 
   async saveSettings() {
     await this.saveData(this.settings);
-  }
-}
-
-class SampleModal extends Modal {
-  constructor(app: App) {
-    super(app);
-  }
-
-  onOpen() {
-    let { contentEl } = this;
-    contentEl.setText("Woah!");
-  }
-
-  onClose() {
-    let { contentEl } = this;
-    contentEl.empty();
   }
 }
