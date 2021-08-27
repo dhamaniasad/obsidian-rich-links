@@ -22,9 +22,9 @@ export default class ObsidianRichLinksPlugin extends Plugin {
     await this.loadSettings();
 
     this.addRibbonIcon("link", "Rich Links", () => {
-      let activeLeaf = this.app.workspace.getActiveViewOfType(MarkdownView);
-      if (activeLeaf) {
-        let editor = activeLeaf.editor;
+      let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+      if (activeView) {
+        let editor = activeView.editor;
         this.urlToIframe(editor);
       }
     });
