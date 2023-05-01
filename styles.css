@@ -40,6 +40,7 @@
 .rich-link-card .rich-link-card-text {
   padding: 4px;
   width: 75%;
+  overflow: hidden;
 }
 
 .rich-link-card .rich-link-card-title {
