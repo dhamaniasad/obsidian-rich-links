@@ -31,7 +31,7 @@ export default class ObsidianRichLinksPlugin extends Plugin {
 
     this.addCommand({
       id: "create-rich-links",
-      name: "Create Rich Links",
+      name: "Create Rich Link",
       editorCheckCallback: (checking: boolean, editor: Editor) => {
         if (!checking) {
           this.urlToIframe(editor);
