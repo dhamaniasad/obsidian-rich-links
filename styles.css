@@ -4,7 +4,7 @@
   border-radius: 3px;
   width: 100%;
   display: flex;
-  text-decoration: none;
+  text-decoration: none !important;
   background-color: var(--background-primary);
 }
 

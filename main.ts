@@ -63,7 +63,7 @@ export default class ObsidianRichLinksPlugin extends Plugin {
         url: `http://iframely.server.crestify.com/iframely?url=${url}`,
       }).then((res) => {
 		  const data = JSON.parse(res);
-		  const imageLink = data.links.find(value => value.type.startsWith("image/")).href || '';
+		  const imageLink = data.links.find((value: { type: string; }) => value.type.startsWith("image/")).href || '';
 
         editor.replaceSelection(`
 <div class="rich-link-card-container"><a class="rich-link-card" href="${url}" target="_blank">
