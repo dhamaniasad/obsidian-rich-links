@@ -54,7 +54,7 @@ export default class ObsidianRichLinksPlugin extends Plugin {
 
   urlToIframe(editor: Editor): void {
     let selectedText = editor.somethingSelected()
-      ? editor.getSelection()
+      ? editor.getSelection().trim()
       : false;
 
     if (selectedText && this.isUrl(selectedText)) {
