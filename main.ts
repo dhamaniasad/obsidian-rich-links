@@ -1,17 +1,8 @@
-import {
-  Notice,
-  Plugin,
-  Editor,
-  MarkdownView
-} from "obsidian";
+import { Notice, Plugin, Editor, MarkdownView } from "obsidian";
 
-interface ObsidianRichLinksPluginSettings {
+interface ObsidianRichLinksPluginSettings {}
 
-}
-
-const DEFAULT_SETTINGS: ObsidianRichLinksPluginSettings = {
-
-};
+const DEFAULT_SETTINGS: ObsidianRichLinksPluginSettings = {};
 
 export default class ObsidianRichLinksPlugin extends Plugin {
   settings: ObsidianRichLinksPlugin;
@@ -56,34 +47,54 @@ export default class ObsidianRichLinksPlugin extends Plugin {
     let selectedText = editor.somethingSelected()
       ? editor.getSelection().trim()
       : false;
+    console.log(selectedText);
 
     if (selectedText && this.isUrl(selectedText)) {
       const url = selectedText;
       ajaxPromise({
         url: `http://iframely.server.crestify.com/iframely?url=${url}`,
-      }).then((res) => {
-		  const data = JSON.parse(res);
-		  const imageLink = data.links.find((value: { type: string; }) => value.type.startsWith("image/")).href || '';
+      })
+        .then((res) => {
+          const data = JSON.parse(res);
+          const image = data.links.find((value: { type: string }) =>
+            value.type.startsWith("image/")
+          );
+          //check if image is available
+          const imageLink = image ? image.href : null;
 
-        editor.replaceSelection(`
-<div class="rich-link-card-container"><a class="rich-link-card" href="${url}" target="_blank">
+          editor.replaceSelection(`
+<div class="rich-link-card-container">
+<a class="rich-link-card" href="${url}" target="_blank">
+	${
+    imageLink
+      ? `
 	<div class="rich-link-image-container">
-		<div class="rich-link-image" style="background-image: url('${imageLink}')">
+	<div
+		class="rich-link-image"
+		style="background-image: url('${imageLink}')"
+	></div>
 	</div>
-	</div>
+	`
+      : ""
+  }
 	<div class="rich-link-card-text">
-		<h1 class="rich-link-card-title">${(data.meta.title || "").replace(/\s{3,}/g, ' ').trim()}</h1>
-		<p class="rich-link-card-description">
-		${(data.meta.description || "").replace(/\s{3,}/g, ' ').trim()}
-		</p>
-		<p class="rich-link-href">
-		${url}
-		</p>
+	<h1 class="rich-link-card-title">
+		${(data.meta.title || "").replace(/\s{3,}/g, " ").trim()}
+	</h1>
+	<p class="rich-link-card-description">
+		${(data.meta.description || "").replace(/\s{3,}/g, " ").trim()}
+	</p>
+	<p class="rich-link-href">${url}</p>
 	</div>
-</a></div>
-
-`);
-      });
+</a>
+</div>`);
+        })
+        .catch((err) => {
+          console.error(err);
+          new Notice(
+            "Error converting URL to rich link. Check console for more details!"
+          );
+        });
     } else {
       new Notice("Select a URL to convert to rich link.");
     }
