@@ -64,36 +64,21 @@ export default class ObsidianRichLinksPlugin extends Plugin {
       }).then((res) => {
 		  const data = JSON.parse(res);
 		  const imageLink = data.links.find((value: { type: string; }) => value.type.startsWith("image/")).href || '';
-
-        editor.replaceSelection(`
-<div class="rich-link-card-container"><a class="rich-link-card" href="${url}" target="_blank">
-	<div class="rich-link-image-container">
-		<div class="rich-link-image" style="background-image: url('${imageLink}')">
-	</div>
-	</div>
-	<div class="rich-link-card-text">
-		<h1 class="rich-link-card-title">${(data.meta.title || "").replace(/\s{3,}/g, ' ').trim()}</h1>
-		<p class="rich-link-card-description">
-		${(data.meta.description || "").replace(/\s{3,}/g, ' ').trim()}
-		</p>
-		<p class="rich-link-href">
-		${url}
-		</p>
-	</div>
-</a></div>
-
-`);
-      });
-    } else {
-      new Notice("Select a URL to convert to rich link.");
+                editor.replaceSelection(`<div class="rich-link-card-container"><a class="rich-link-card" href="${url}" target="_blank"><div class="rich-link-image-container"><div class="rich-link-image" style="background-image: url('${imageLink}')">	</div></div><div class="rich-link-card-text"><h1 class="rich-link-card-title">${(data.meta.title || "").replace(/\s{3,}/g, ' ').trim()}</h1><p class="rich-link-card-description">${(data.meta.description || "").replace(/\s{3,}/g, ' ').trim()}</p><p class="rich-link-href">${url}</p></div></a></div>`);
+            });
+        }
+        else {
+            new obsidian.Notice("Select a URL to convert to rich link.");
+        }
     }
-  }
-
-  async loadSettings() {
-    this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
-  }
-
-  async saveSettings() {
-    await this.saveData(this.settings);
-  }
+    loadSettings() {
+        return __awaiter(this, void 0, void 0, function* () {
+            this.settings = Object.assign({}, DEFAULT_SETTINGS, yield this.loadData());
+        });
+    }
+    saveSettings() {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.saveData(this.settings);
+        });
+    }
 }
